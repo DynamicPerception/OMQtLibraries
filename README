@@ -1,0 +1,65 @@
+OpenMoCo Qt Libraries
+
+(c) 2011-2012 Dynamic Perception LLC
+
+OpenMoCo Qt Libraries provided under the GNU LGPL License Version 3.
+
+Included in this bundle is a known good target of qextserialport. The
+qextserialport library is bundled to ensure correct compilation and a
+known feature set that has been tested.  qextserialport is licensed under
+the MIT license by its original author(s), and Dynamic Perception makes
+no claim to changes or copyright, except wherein changes have been made to
+QT project files to ensure proper compilation.
+
+This bundle is created inside of a top-level directory named 'libs', to add 
+this library to your Qt project, copy the entire libs directory into your project, and
+ensure that your top-level project file has the following contents:
+
+TEMPLATE = subdirs
+SUBDIRS += libs
+
+Then, after having created a sub-directory for your actual project code, add
+ the following to the .pro file in that subdirectory:
+
+CONFIG += ordered
+
+INCLUDEPATH  += ../libs/qextserialport/src/ \
+		../libs/OpenMoCo \
+                ../libs/OpenMoCo/OpenMoCo \
+                .
+
+ # link to openmoco libraries
+
+
+win32 {
+    CONFIG(debug, debug|release) {
+        LIBS += -L../libs/OpenMoCo/debug
+    }
+    CONFIG(release, debug|release) {
+        LIBS += -L../libs/OpenMoCo/release
+    }
+
+    LIBS += -L../libs/qextserialport/src/build
+}
+
+macx {
+    LIBS += -L../libs/OpenMoCo/build
+    LIBS += -L$$(HOME)/lib
+}
+
+
+
+LIBS += -lopenmoco
+
+ # link to serialport lib, add icons
+
+win32 {
+    LIBS += -lqextserialport1
+}
+
+macx {
+    LIBS += -lqextserialport
+}
+
+
+
